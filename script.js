@@ -7,7 +7,6 @@ const terminalText = `> [SYSTEM_STARTUP]: Friendship_Core_v11.0
 > [ACTION]: Initialize 'Friendship_Stats' UI? [Y/N]`;
 
 let i = 0;
-const speed = 40; 
 const typewriterElem = document.getElementById('typewriter');
 const confirmBtn = document.getElementById('confirm-btn');
 
@@ -15,29 +14,28 @@ function typeWriter() {
     if (i < terminalText.length) {
         typewriterElem.innerHTML += terminalText.charAt(i);
         i++;
-        setTimeout(typeWriter, speed);
+        setTimeout(typeWriter, 35);
     } else {
         confirmBtn.classList.remove('hidden');
     }
 }
 
-// Start the terminal
 typeWriter();
 
-// Handle Button Click & Transition
 confirmBtn.addEventListener('click', () => {
+    confirmBtn.classList.add('hidden');
+    document.getElementById('crash-sequence').classList.remove('hidden');
     const terminal = document.getElementById('terminal-screen');
-    terminal.classList.add('glitch');
     
+    setTimeout(() => { terminal.classList.add('glitch'); }, 400);
+
     setTimeout(() => {
         terminal.classList.add('hidden');
         document.getElementById('wrapped-screen').classList.remove('hidden');
         startWrapped();
-    }, 500);
+    }, 1200);
 });
 
-// Wrapped Slide Logic
-let currentSlide = 0;
 const slides = document.querySelectorAll('.slide');
 const progressBar = document.getElementById('bar');
 
@@ -50,8 +48,7 @@ function showSlide(index) {
 
     slides.forEach(s => s.classList.remove('active'));
     slides[index].classList.add('active');
-
-    // Progress bar animation
+    
     progressBar.style.transition = 'none';
     progressBar.style.width = '0%';
     
@@ -64,5 +61,5 @@ function showSlide(index) {
         if (index < slides.length - 1) {
             showSlide(index + 1);
         }
-    }, 4000); // 4 seconds per slide
+    }, 4000);
 }
